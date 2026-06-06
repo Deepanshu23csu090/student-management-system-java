@@ -22,6 +22,21 @@ public class Main {
         }
     }
 
+    public static String getValidName(Scanner sc, String message) {
+
+    while (true) {
+
+        System.out.print(message);
+        String name = sc.nextLine().trim();
+
+        if (name.matches("[a-zA-Z ]+")) {
+            return name;
+        }
+
+        System.out.println("Name should contain only alphabets.");
+    }
+}
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -38,7 +53,10 @@ public class Main {
             System.out.println("3. Search Student");
             System.out.println("4. Update Student");
             System.out.println("5. Delete Student");
-            System.out.println("6. Exit");
+            System.out.println("6. Verify Student");
+            System.out.println("7. Approve Student");
+            System.out.println("8. Reject Student");
+            System.out.println("9. Exit");
 
             choice = getValidInt(sc, "Enter Choice: ");
 
@@ -48,8 +66,8 @@ public class Main {
 
                     int id = getValidInt(sc, "Enter ID: ");
 
-                    System.out.print("Enter Name: ");
-                    String name = sc.nextLine();
+                    String name = getValidName(sc, "Enter Name: ");
+                    
 
                     int age = getValidInt(sc, "Enter Age: ");
 
@@ -73,32 +91,36 @@ public class Main {
                             manager.searchStudent(searchId);
 
                     if (found != null) {
+
+                        System.out.println("\n----------------");
                         System.out.println(found);
+
                     } else {
+
                         System.out.println("Student Not Found");
                     }
                 }
 
                 case 4 -> {
 
-                    int updateId =
+                        int updateId =
                             getValidInt(sc, "Enter ID: ");
 
-                    System.out.print("New Name: ");
-                    String newName = sc.nextLine();
+                        String newName =
+                            getValidName(sc, "New Name: ");
 
-                    int newAge =
+                         int newAge =
                             getValidInt(sc, "New Age: ");
 
-                    System.out.print("New Course: ");
-                    String newCourse = sc.nextLine();
+                        System.out.print("New Course: ");
+                        String newCourse = sc.nextLine();
 
-                    manager.updateStudent(
-                            updateId,
-                            newName,
-                            newAge,
-                            newCourse);
-                }
+                        manager.updateStudent(
+                        updateId,
+                        newName,
+                        newAge,
+                        newCourse);
+                        }
 
                 case 5 -> {
 
@@ -108,12 +130,36 @@ public class Main {
                     manager.deleteStudent(deleteId);
                 }
 
-                case 6 -> System.out.println("Thank You");
+                case 6 -> {
+
+                    int verifyId =
+                            getValidInt(sc, "Enter ID: ");
+
+                    manager.verifyStudent(verifyId);
+                }
+
+                case 7 -> {
+
+                    int approveId =
+                            getValidInt(sc, "Enter ID: ");
+
+                    manager.approveStudent(approveId);
+                }
+
+                case 8 -> {
+
+                    int rejectId =
+                            getValidInt(sc, "Enter ID: ");
+
+                    manager.rejectStudent(rejectId);
+                }
+
+                case 9 -> System.out.println("Thank You");
 
                 default -> System.out.println("Invalid Choice");
             }
 
-        } while (choice != 6);
+        } while (choice != 9);
 
         sc.close();
     }

@@ -1,3 +1,4 @@
-101,Deepanshu,20,Data Science
-102,Rahul,19,AI
-2,d,2,d
+101,Rahul,20,CSE,VERIFIED
+102,Priya,21,DS,PENDING
+103,Aman,22,AI,PENDING
+104,3,4,aiml,PENDING

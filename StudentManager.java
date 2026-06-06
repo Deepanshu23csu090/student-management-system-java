@@ -91,6 +91,92 @@ public class StudentManager {
         }
     }
 
+    // =========================
+    // WORKFLOW METHODS
+    // =========================
+
+    public void verifyStudent(int id) {
+
+        Student student = searchStudent(id);
+
+        if (student != null) {
+
+            if (student.getStatus().equals("PENDING")) {
+
+                student.setStatus("VERIFIED");
+
+                saveStudents();
+
+                System.out.println("Student Verified");
+
+            } else {
+
+                System.out.println(
+                        "Only PENDING students can be verified.");
+            }
+
+        } else {
+
+            System.out.println("Student Not Found");
+        }
+    }
+
+    public void approveStudent(int id) {
+
+        Student student = searchStudent(id);
+
+        if (student != null) {
+
+            if (student.getStatus().equals("VERIFIED")) {
+
+                student.setStatus("APPROVED");
+
+                saveStudents();
+
+                System.out.println("Student Approved");
+
+            } else {
+
+                System.out.println(
+                        "Student must be VERIFIED before approval.");
+            }
+
+        } else {
+
+            System.out.println("Student Not Found");
+        }
+    }
+
+    public void rejectStudent(int id) {
+
+        Student student = searchStudent(id);
+
+        if (student != null) {
+
+            if (!student.getStatus().equals("APPROVED")) {
+
+                student.setStatus("REJECTED");
+
+                saveStudents();
+
+                System.out.println("Student Rejected");
+
+            } else {
+
+                System.out.println(
+                        "Approved students cannot be rejected.");
+            }
+
+        } else {
+
+            System.out.println("Student Not Found");
+        }
+    }
+
+    // =========================
+    // FILE HANDLING
+    // =========================
+
     private void saveStudents() {
 
         try {
@@ -105,7 +191,8 @@ public class StudentManager {
                         s.getId() + "," +
                         s.getName() + "," +
                         s.getAge() + "," +
-                        s.getCourse());
+                        s.getCourse() + "," +
+                        s.getStatus());
 
                 writer.newLine();
             }
@@ -142,13 +229,15 @@ public class StudentManager {
                 String name = data[1];
                 int age = Integer.parseInt(data[2]);
                 String course = data[3];
+                String status = data[4];
 
                 students.add(
                         new Student(
                                 id,
                                 name,
                                 age,
-                                course));
+                                course,
+                                status));
             }
 
             reader.close();
